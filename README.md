@@ -1,6 +1,6 @@
-#
-# playwright-ui-tests
+![CI](https://github.com/KajalKadam2/playwright-ui-tests/actions/workflows/ci.yml/badge.svg)
 
+# playwright-ui-tests
 UI automation test suite using Playwright + pytest + Page Object Model.
 
 ## Stack
