@@ -39,8 +39,12 @@ def pytest_runtest_makereport(item, call):
 
 
 @pytest.fixture(autouse=True)
-def screenshot_on_failure(page: Page, request):
+def screenshot_on_failure(request):
     yield
+    # Only take screenshot if page fixture exists (UI tests only)
+    page = request.node.funcargs.get("page", None)
+    if page is None:
+        return
     if hasattr(request.node, "rep_call") and request.node.rep_call.failed:
         Path("screenshots").mkdir(exist_ok=True)
         name = request.node.name.replace("[", "_").replace("]", "")

@@ -2,14 +2,16 @@
 
 import requests
 import pytest
-
+import os
 
 
 class ReqresAPI:
     """ Thin wrapper around reqres.in endpoints. """
 
     BASE = "https://reqres.in/api"
-    HEADERS = {"x-api-key": "free_user_3E52AzI0czxneEVobhhCjAmWXCL"}
+    
+    API_KEY = os.environ.get("REQRES_API_KEY", "free_user_3E52AzI0czxneEVobhhCjAmWXCL")
+    HEADERS  = {"x-api-key": API_KEY}
 
     def get_user(self, user_id: int):
         return requests.get(f"{self.BASE}/users/{user_id}", headers=self.HEADERS)

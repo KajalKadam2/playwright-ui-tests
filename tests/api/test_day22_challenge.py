@@ -27,8 +27,12 @@ updatedAt field exists. Then PATCH again with a different job. Assert the new jo
 import pytest
 import requests
 
+import os
+
 BASE_URL = "https://reqres.in/api"
-HEADERS = {"x-api-key": "free_user_3E52AzI0czxneEVobhhCjAmWXCL"}
+
+API_KEY = os.environ.get("REQRES_API_KEY", "free_user_3E52AzI0czxneEVobhhCjAmWXCL")
+HEADERS  = {"x-api-key": API_KEY}
 
 # ----- Test 1: GET /users/page=2 schema --------------------
 def test_get_all_users_schema():
