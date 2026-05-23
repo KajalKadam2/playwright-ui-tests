@@ -8,9 +8,9 @@ UI automation test suite using Playwright + pytest + Page Object Model.
 
 ## Structure
 - `pages/` — Page Object classes (BasePage, LoginPage, SecurePage, CheckboxesPage)
-- `conftest.py` — fixtures + auto screenshot on failure
-- `test_login_pom.py` — parametrized login tests
-- `test_checkboxes_pom.py` — checkbox interaction tests
+- `conftest.py` — shared fixtures + auto screenshot on failure
+- `tests/ui/` — Playwright UI tests (POM + parametrize)
+- `tests/api/` — API tests (reqres.in CRUD + schema validation)
 
 ## Run
 pip install pytest-playwright
