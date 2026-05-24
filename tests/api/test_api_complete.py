@@ -58,7 +58,7 @@ def test_pagination(api):
     """ Both pages of users should return 6 items each. """
     for page in [1,2]:
         r = api.get_users(page=page)
-        assert r. status_code == 200
+        assert r.status_code == 200
         body = r.json()
         assert body["page"] == page
         assert len(body["data"]) == 6

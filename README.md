@@ -2,8 +2,8 @@
 
 ![CI](https://github.com/KajalKadam2/playwright-ui-tests/actions/workflows/ci.yml/badge.svg)
 
-Production-grade UI and API automation suite built with **Python + Playwright + pytest**.
-Demonstrates Page Object Model, data-driven testing, fixtures, and CI/CD.
+Production-grade UI and API automation suite built with **Python + Playwright + pytest**.  
+Demonstrates Page Object Model, data-driven testing, API client pattern, and CI/CD.
 
 ---
 
@@ -20,34 +20,43 @@ Demonstrates Page Object Model, data-driven testing, fixtures, and CI/CD.
 ---
 
 ## Project Structure
-````
+
+```
 playwright-ui-tests/
-├── pages/                       # Page Object Model classes
-│   ├── base_page.py             # Shared navigation and utilities
-│   ├── login_page.py            # Login page — locators + actions + assertions
-│   ├── checkboxes_page.py       # Checkboxes page
-│   └── secure_page.py           # Secure area page
+├── pages/                         # Page Object Model classes
+│   ├── base_page.py               # Shared navigation and utilities
+│   ├── login_page.py              # Login page — locators + actions + assertions
+│   ├── checkboxes_page.py         # Checkboxes page
+│   └── secure_page.py             # Secure area page
 ├── tests/
-│   ├── ui/                      # Playwright browser tests
-│   │   ├── test_login_pom.py    # Login tests with parametrize
-│   │   └── test_checkboxes_pom.py
-│   └── api/                     # REST API tests
-│       ├── test_api_complete.py # Full CRUD lifecycle
-│       └── test_day22_challenge.py
-├── conftest.py                  # Fixtures + auto screenshot on failure
+│   ├── ui/                        # Playwright browser tests
+│   │   ├── test_login_pom.py      # Login tests with parametrize
+│   │   └── test_checkboxes_pom.py # Checkbox interaction tests
+│   └── api/                       # REST API tests
+│       ├── test_api_complete.py   # ReqresAPI class — full CRUD lifecycle
+│       └── test_day22_challenge.py# Schema validation + parametrized scenarios
+├── conftest.py                    # Fixtures + auto screenshot on failure
 ├── requirements.txt
-└── .github/workflows/ci.yml    # GitHub Actions CI/CD
-````
+└── .github/workflows/ci.yml      # GitHub Actions CI/CD
+```
+
 ---
 
-## Key Features
+## UI Test Features — Playwright + POM
 
-- **Page Object Model** — locators and actions in page classes, tests stay clean
+- **Page Object Model** — BasePage, LoginPage, CheckboxesPage, SecurePage
 - **pytest fixtures** — zero `page.goto()` in any test file
-- **Parametrize** — data-driven tests with readable `ids=`
+- **Parametrize** — data-driven login scenarios with readable `ids=`
 - **Auto screenshot on failure** — saved to `screenshots/` automatically
-- **CI/CD** — GitHub Actions runs UI and API tests separately on every push
-- **Full CRUD API coverage** — GET POST PATCH DELETE with schema validation
+- **Assertions** — `to_be_visible`, `to_have_url`, `to_be_checked`, `to_have_count`
+
+## API Test Features — requests + pytest
+
+- **ReqresAPI helper class** — thin wrapper around all endpoints
+- **Full CRUD coverage** — GET, POST, PATCH, DELETE
+- **Schema validation** — every user field checked across all records
+- **Parametrized scenarios** — login, user IDs, error cases with readable `ids=`
+- **Response time assertions** — performance checks on critical endpoints
 
 ---
 
@@ -57,8 +66,8 @@ playwright-ui-tests/
 |-------|-------|------|
 | Login — valid, invalid, parametrized | 7 | UI + POM |
 | Checkboxes — state, interaction | 3 | UI + POM |
-| API users — CRUD lifecycle | 3 | API |
-| API challenge — schema, parametrized | 16 | API |
+| API — CRUD lifecycle, pagination, schema | 3 | API |
+| API — schema, parametrized, 404, login | 16 | API |
 | **Total** | **29** | |
 
 ---
@@ -74,7 +83,7 @@ cd playwright-ui-tests
 pip install -r requirements.txt
 playwright install chromium
 
-# Run all tests
+# Run everything
 pytest tests/ -v
 
 # Run UI tests only
@@ -90,15 +99,15 @@ pytest tests/api/ -v
 
 GitHub Actions runs automatically on every push to `main`:
 
-- **API Tests** — runs in ~12s, no browser needed
-- **Playwright UI Tests** — installs Chromium, runs full suite ~45s
-- Screenshots uploaded as artifacts on any failure
+- **API Tests job** — `pip install requests pytest` only, no browser, runs in ~12s
+- **Playwright UI Tests job** — installs Chromium, full suite runs in ~45s
+- Screenshots uploaded as artifacts on any UI test failure
 
 ---
 
 ## Test Sites
 
-- UI tests → [The Internet](https://the-internet.herokuapp.com) — purpose-built test practice site
+- UI tests → [The Internet](https://the-internet.herokuapp.com) — purpose-built Playwright practice site
 - API tests → [ReqRes](https://reqres.in) — hosted REST API for testing
 
 ---
